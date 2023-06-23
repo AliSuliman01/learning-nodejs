@@ -13,10 +13,26 @@ jobs:
         uses: peter-evans/create-or-update-comment@v3
         id: couc
         with:
-          issue-number: '${{ github.event.issue.number }}'
+          issue-number: ${{ github.event.issue.number }}
           body: |
             My comment
 
       - name: "dump previous step output"
         run: echo '${{ toJSON(steps.couc.outputs) }}' | jq
         shell: bash
+
+  comment-with-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: create comment with api
+        run: |
+          gh api -X POST \
+            https://api.github.com/repo/${ORGANIZATION}/${REPOSITORY_NAME}/issues/${ISSUE_NUMBER}/comments \
+            -f body='
+            comment from api call
+            '
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ORGANIZATION: ${{ github.event.user.login }}
+          REPOSITORY_NAME: ${{ github.event.repository.name }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}

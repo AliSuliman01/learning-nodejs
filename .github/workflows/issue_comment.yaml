@@ -6,6 +6,13 @@ on:
     types: [opened]
 
 jobs:
+  dump-event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: dump event
+        run: echo '${{ toJSON(github.event) }}'
+        shell: bash
+
   comment-with-action: 
     permissions: write-all
     runs-on: ubuntu-latest
@@ -31,7 +38,7 @@ jobs:
           gh api POST \
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/${OWNER}/${REPO}/issues/${ISSUE_NUMBER}/comments
+          /repos/${OWNER}/${REPO}/issues/${ISSUE_NUMBER}/comments \
           -f body='
             comment from api call
             '

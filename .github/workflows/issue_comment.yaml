@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: dump event
-        run: echo '${{ toJSON(github.event) }}'
+        run: echo '${{ toJSON(github.event) }}' | jq
         shell: bash
 
   comment-with-action: 
@@ -39,9 +39,7 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/${OWNER}/${REPO}/issues/${ISSUE_NUMBER}/comments \
-          -f body='
-            comment from api call
-            '
+          -f body=' comment from api call '
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.event.user.login }}

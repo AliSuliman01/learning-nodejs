@@ -19,7 +19,7 @@ jobs:
         shell: bash
   goodbye:
     runs-on: ubuntu-latest
-    setps:
+    steps:
       - name: goodbye world
         run: echo "Goodbye world"
         shell: bash

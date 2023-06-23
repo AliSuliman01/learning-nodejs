@@ -36,10 +36,10 @@ jobs:
       - name: create comment with api
         run: |
           gh api POST \
-          -H "Accept: application/vnd.github+json" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
+          -H 'Accept: application/vnd.github+json' \
+          -H 'X-GitHub-Api-Version: 2022-11-28' \
           http://api.github.com/repos/${OWNER}/${REPO}/issues/${ISSUE_NUMBER}/comments \
-          -f body=' comment from api call '
+          -f body='comment from api call'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OWNER: ${{ github.event.user.login }}
